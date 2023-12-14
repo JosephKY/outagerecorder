@@ -1,0 +1,1 @@
+This is where ping history is stored. You can change where ping history is stored in config.js

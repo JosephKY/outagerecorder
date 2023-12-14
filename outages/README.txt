@@ -1,1 +1,1 @@
-This is where outage JSON logs are stored. You can change where they are stored in config.js
+This is where outage logs are stored. You can change where outage logs are stored in config.js

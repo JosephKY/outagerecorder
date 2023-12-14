@@ -1,2 +1,6 @@
 *.lnk
 node_modules
+outages/*
+!outages/README.txt
+pingHistory/*
+!pingHistory/README.txt
