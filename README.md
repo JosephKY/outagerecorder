@@ -6,6 +6,7 @@ Outage Recorder is a lightweight ping utility made entirely in JavaScript.
 2. Automatically record outages with configurable outage thresholds
 3. Automatically record all-time ping history
 4. View your all-time ping history as a visual line graph (currently a work in progress)
+5. Colorful ping logs based on the ping's performance
 
 ### Usage
 Easy way: double click `run.bat`. It will install the required packages and run `index.js` for you.
