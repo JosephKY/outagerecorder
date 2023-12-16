@@ -17,9 +17,15 @@ Take a look inside of `config.js` if you wish to change some settings, such as t
 ### Configuration
 These are the options you can find in `config.js`:
 `ips`: array(string): The IP addresses you want to ping
+
 `timeoutCountForOutage`: integer: The number of times all the IP addresses being pinged must time out in order for an outage to be declared.
-`outageFolder`: string: The folder directory where you want to store outage logs. Leave blank to disable outage logs
+
+`outageFolder`: string: The folder directory where you want to store outage logs. Leave blank to disable outage logs.
+
 `pingDelay`: int: The amount of time, in milliseconds, spent between ping batches. All IPs are pinged at the same time.
+
 `pingTimeout`: int: The maximum amount of time, in milliseconds, that a ping has to return before it's considered a timeout.
-`pingHistoryFolder`: string: The folder directory where all-time ping logs are stored. Leave blank to disable ping logs
-`maxPingChunkSize`: int: The maximum amount of ping data, for each IP, that is stored in memory before it is written to all-time ping logs
+
+`pingHistoryFolder`: string: The folder directory where all-time ping logs are stored. Leave blank to disable ping logs.
+
+`maxPingChunkSize`: int: The maximum amount of ping data, for each IP, that is stored in memory before it is written to all-time ping logs.
