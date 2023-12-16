@@ -30,7 +30,7 @@ These are the options you can find in `config.js`:
   <tr>
     <td class="tg-0lax">ips</td>
     <td class="tg-0lax">array (string)</td>
-    <td class="tg-0lax">The IP addresses you want to ping</td>
+    <td class="tg-0lax">The IP addresses you want to ping. Leave blank to be prompted for IP addresses on startup</td>
     <td class="tg-0lax">[ "8.8.8.8", "1.1.1.1" ]</td>
   </tr>
   <tr>
