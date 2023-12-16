@@ -16,6 +16,7 @@ Take a look inside of `config.js` if you wish to change some settings, such as t
 
 ### Configuration
 These are the options you can find in `config.js`:
+
 `ips`: array(string): The IP addresses you want to ping
 
 `timeoutCountForOutage`: integer: The number of times all the IP addresses being pinged must time out in order for an outage to be declared.
