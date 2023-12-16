@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <br>
+        <input type="file" id="fileinput" />
+    </body>
+    <script type="module" src="https://unpkg.com/chart.js@4.2.1/dist/chart.umd.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function onChange(event) {
+        var reader = new FileReader();
+        reader.onload = onReaderLoad;
+        reader.readAsText(event.target.files[0]);
+    }
+
+    function onReaderLoad(event){
+        var obj = JSON.parse(event.target.result);
+        if(!obj.length){
+            alert("Invalid JSON file");
+            return;
+        }
+
+        let times = [];
+        let delays = [];
+
+        obj.forEach(ping=>{
+            let pingDate = new Date(0);
+            pingDate.setUTCSeconds(Math.floor(ping.time / 1000));
+            times.push(pingDate.toLocaleString());
+            if(ping.delay == 'unknown')ping.delay = 0;
+            delays.push(ping.delay);
+        })
+
+        let canvas = document.createElement('canvas');
+        new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: times,
+                datasets: [{
+                    label: 'Delay (ms)',
+                    data: delays,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
+            }
+        });
+        document.body.appendChild(canvas);
+
+
+    }
+ 
+    document.getElementById('fileinput').addEventListener('change', onChange);
+    </script>
+</html>

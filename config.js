@@ -1,6 +1,6 @@
 module.exports = {
     "timeoutCountForOutage": 3, // number of consecutive timeouts before outage is logged
-    //"ip": "8.8.8.8", // ipv4 address to ping
+    //"ips": ["8.8.8.8"], // ipv4 addresses to ping
     "outageFolder": "./outages", // directory to store outage logs in. leave blank for no outage logs
     "pingDelay": 1000, // in milliseconds
     "pingTimeout": 2000, // in milliseconds

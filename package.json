@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "chalk": "^4.1.2",
     "fs": "^0.0.1-security",
     "ping": "^0.4.4",
     "prompt-sync": "^4.2.0"
