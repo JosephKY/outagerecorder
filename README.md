@@ -61,7 +61,7 @@ These are the options you can find in `config.js`:
     <td class="tg-0lax">pingHistoryFolder</td>
     <td class="tg-0lax">string</td>
     <td class="tg-0lax">The folder directory where all-time ping logs are stored. Leave blank to disable ping logs.</td>
-    <td class="tg-0lax">'C:\Users\John Doe\Documents\Ping Logs"</td>
+    <td class="tg-0lax">"C:\Users\John Doe\Documents\Ping Logs"</td>
   </tr>
   <tr>
     <td class="tg-0lax">maxPingChunkSize</td>
