@@ -9,7 +9,9 @@ Outage Recorder is a lightweight ping utility made entirely in JavaScript.
 5. Choose between a traditional ping log feed or a ping graph
 
 ### Usage
-Easy way: double click `run.bat`. It will install the required packages and run `index.js` for you.
+Prerequisites: You must have [Node.JS](https://nodejs.org/en/download/current) installed
+
+Easy way: Double click `run.bat` or `run.sh` depending on your system. It will install the required packages and run `index.js` for you.
 
 Long way:  Run `npm i` to install the required packages, then run `node index.js`. 
 
