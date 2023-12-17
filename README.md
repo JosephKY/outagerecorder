@@ -112,6 +112,13 @@ These are the options you can find in `config.js`:
     <td>--maxhistory, -x</td>
   </tr>
   <tr>
+    <td class="tg-0lax">alignLogs</td>
+    <td class="tg-0lax">boolean</td>
+    <td class="tg-0lax">If true and not in graph mode, keeps all the logs aligned at all times so that they don't shift left and right.</td>
+    <td class="tg-0lax">false</td>
+    <td>--align, -a</td>
+  </tr>
+  <tr>
     <td class="tg-0lax">graphMode</td>
     <td class="tg-0lax">boolean</td>
     <td class="tg-0lax">If set to true, program will run in graph mode where ping data is shown as a graph instead of constant ping logs. Note that window sizing is not dynamic in graph mode and you'll have to adjust your terminal's window size before you begin the program</td>

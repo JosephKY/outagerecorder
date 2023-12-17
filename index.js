@@ -50,6 +50,11 @@ const options = cla([
         type: Number
     },
     {
+        name: 'align',
+        alias: 'a',
+        type: Boolean,
+    },
+    {
         name: 'graphmode',
         alias: 'g',
         type: Boolean
@@ -69,6 +74,7 @@ let optionConfigCoor = {
     timeout: 'pingTimeout',
     historydir: 'pingHistoryFolder',
     maxhistory: 'maxPingChunkSize',
+    align: 'alignLogs',
     graphmode: 'graphMode',
     graphmaxpings: 'graphModeMaxPings'
 }
@@ -229,11 +235,22 @@ function check(){
                 timeoutCount = timeoutCount + 1;
             }
 
+            let pingStringAttach = "";
+            let pingStringAttachSimple = "";
             if(pingResult.time == 'unknown') {
-                pingString = pingString + chalk.magenta(`${ip}: Timeout  `);
+                pingStringAttach = chalk.magenta(`${ip}: Timeout  `);
+                pingStringAttachSimple = `${ip}: Timeout`;
             } else {
-                pingString = pingString + (pingResult.time < 100 ? chalk.green(`${ip}: ${pingResult.time}ms  `) : pingResult.time < 300 ? chalk.yellow(`${ip}: ${pingResult.time}ms  `) : chalk.red(`${ip}: ${pingResult.time}ms  `));
+                pingStringAttach = (pingResult.time < 100 ? chalk.green(`${ip}: ${pingResult.time}ms  `) : pingResult.time < 300 ? chalk.yellow(`${ip}: ${pingResult.time}ms  `) : chalk.red(`${ip}: ${pingResult.time}ms  `));
+                pingStringAttachSimple = `${ip}: ${pingResult.time}ms`;
             }
+            let psAttachMaxChars = `${ip}: Timeout  `.length;
+            if(psAttachMaxChars > pingStringAttachSimple.length && config.alignLogs){
+                for (let i = 0; i < psAttachMaxChars - pingStringAttachSimple.length; i++) {
+                    pingStringAttach = pingStringAttach + " ";
+                }
+            }
+            pingString = pingString + pingStringAttach;
             recordPing(ip, pingResult.time)
         }
 
