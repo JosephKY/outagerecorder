@@ -189,18 +189,30 @@ function graphRender(){
             achart.lightred,
             achart.lightyellow
         ],
-        'height': windowsize.height - 3,
+        'height': windowsize.height - 4,
         'min':0,
         'max':biggestArrLength,
     }))
     let infoBarString = "";
+    let statusBarString = "";
     for(let [ip, pings] of Object.entries(pingArrs)){
         let color = graphIpColorCoor[config.ips.indexOf(ip) % graphIpColorCoor.length];
         let delay = pings[pings.length - 1]
-        infoBarString = infoBarString + color(`${ip}: ${!pingArrsTimedOut.includes(ip) ? `${delay}ms` : 'Timeout' } `);
+        let attach = color(`${ip}: ${!pingArrsTimedOut.includes(ip) ? `${delay}ms` : 'Timeout' } `);
+        infoBarString = infoBarString + attach;
+        let statusColor = pingArrsTimedOut.includes(ip) ? chalk.bgMagenta : (delay < 100 ? chalk.bgGreen : delay < 300 ? chalk.bgYellow : chalk.bgRed);
+        for (let i = 0; i < attach.length; i++) {
+            if(i < 5 || i > attach.length - 5)continue;
+            if(i == attach.length - 6){
+                statusBarString = statusBarString + " ";
+                break;
+            }
+            statusBarString = statusBarString + (i != attach.length - 1 ? statusColor(' ') : ' ');
+        }
     }
-    if(currentOutageBegan != 0) infoBarString = infoBarString + chalk.bgRed(` OUTAGE | Duration: ${Math.floor((Date.now() - currentOutageBegan) / 1000)}s `)
+    if(currentOutageBegan != 0) statusBarString = statusBarString + chalk.bgRed(` OUTAGE | Duration: ${Math.floor((Date.now() - currentOutageBegan) / 1000)}s `)
     console.log(infoBarString)
+    console.log(statusBarString)
     pingArrsTimedOut = [];
 }
 
@@ -218,7 +230,7 @@ function check(){
             }
 
             if(pingResult.time == 'unknown') {
-                pingString = pingString + chalk.yellow(`${ip}: Timeout  `);
+                pingString = pingString + chalk.magenta(`${ip}: Timeout  `);
             } else {
                 pingString = pingString + (pingResult.time < 100 ? chalk.green(`${ip}: ${pingResult.time}ms  `) : pingResult.time < 300 ? chalk.yellow(`${ip}: ${pingResult.time}ms  `) : chalk.red(`${ip}: ${pingResult.time}ms  `));
             }
