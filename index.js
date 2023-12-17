@@ -202,7 +202,7 @@ function graphRender(){
     let infoBarString = "";
     let statusBarString = "";
     for(let [ip, pings] of Object.entries(pingArrs)){
-        let color = graphIpColorCoor[config.ips.indexOf(ip) % graphIpColorCoor.length];
+        let color = graphIpColorCoor[config.ips.indexOf(ip) % graphIpColorCoor.length] || chalk.white;
         let delay = pings[pings.length - 1]
         let attach = color(`${ip}: ${!pingArrsTimedOut.includes(ip) ? `${delay}ms` : 'Timeout' } `);
         infoBarString = infoBarString + attach;
