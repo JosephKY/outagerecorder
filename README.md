@@ -8,6 +8,30 @@ Outage Recorder is a lightweight ping utility made entirely in JavaScript.
 4. Colorful ping logs based on the ping's performance
 5. Choose between a traditional ping log feed or a ping graph
 
+### Media
+<table class="tg">
+<thead>
+  <tr>
+    <td class="tg-0lax"><img src="https://github.com/JosephKY/outagerecorder/blob/main/media/graph.png?raw=true" width="500"/></td>
+    <td class="tg-0lax"><img src="https://github.com/JosephKY/outagerecorder/blob/main/media/outagegraph.png?raw=true" width="500"/></td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th class="tg-0lax">Graph Log</th>
+    <th class="tg-0lax">Outage in Graph Log</th>
+  </tr>
+  <tr>
+    <td class="tg-0lax"><img src="https://github.com/JosephKY/outagerecorder/blob/main/media/log.png?raw=true" width="500"/></td>
+    <td class="tg-0lax"><img src="https://github.com/JosephKY/outagerecorder/blob/main/media/outagelog.png?raw=true" width="500"/></td>
+  </tr>
+  <tr>
+    <th class="tg-0lax">Traditional Log</th>
+    <th class="tg-0lax">Outage in Traditional Log</th>
+  </tr>
+</tbody>
+</table>
+
 ### Usage
 Prerequisites: You must have [Node.JS](https://nodejs.org/en/download/current) installed
 
