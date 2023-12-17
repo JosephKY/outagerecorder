@@ -44,11 +44,11 @@ These are the options you can find in `config.js`:
     <td>--maxtimeout, -m</td>
   </tr>
   <tr>
-    <td class="tg-0lax">nonoutageIps</td>
+    <td class="tg-0lax">nonOutageIps</td>
     <td class="tg-0lax">array (string)</td>
     <td class="tg-0lax">The IP addresses in the `ips` option that don't need to time out in order for an outage to be declared.</td>
     <td class="tg-0lax">["1.1.1.1"]</td>
-    <td>--maxtimeout, -m</td>
+    <td>--nonoutageips, -n</td>
   </tr>
   <tr>
     <td class="tg-0lax">outageFolder</td>
