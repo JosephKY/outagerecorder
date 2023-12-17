@@ -7,6 +7,6 @@ module.exports = {
     "pingTimeout": 2000, // in milliseconds 
     "pingHistoryFolder": "./pingHistory", // the directory to store ping history in. leave blank for no ping history
     "maxPingChunkSize": 5, // number of pings to store in memory before exporting to ping history file
-    "graphMode": true, // Show a graph of pings instead of constant logging
+    "graphMode": false, // Show a graph of pings instead of constant logging
     "graphModeMaxPings": 125, // number of pings to show in graph. if this is greater than the width of the terminal, it will be set to the width of the terminal
 }
