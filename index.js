@@ -19,6 +19,12 @@ const options = cla([
         type: Number,
     },
     {
+        name: 'nonoutageips',
+        alias: 'n',
+        type: String,
+        multiple: true
+    },
+    {
         name: 'outagedir',
         alias: 'o',
         type: String
@@ -207,7 +213,7 @@ function check(){
             let pingResult = await ping.promise.probe(ip, { 'timeout': Math.floor(config.pingTimeout / 1000) });
             if(config.graphMode) pingArrAdd(ip, pingResult.time);
             pings[ip] = pingResult.time;
-            if(pingResult.time == 'unknown' || config.nonoutageIps.includes(ip)){
+            if(pingResult.time == 'unknown' || config.nonOutageIps.includes(ip)){
                 timeoutCount = timeoutCount + 1;
             }
 
