@@ -4,3 +4,7 @@ outages/*
 !outages/README.txt
 pingHistory/*
 !pingHistory/README.txt
+graph.html
+old.js
+outageanalysis.js
+spreadsheet.js
