@@ -6,7 +6,8 @@ Outage Recorder is a lightweight ping utility made entirely in JavaScript.
 2. Automatically record outages with configurable outage thresholds
 3. Automatically record all-time ping history
 4. Colorful ping logs based on the ping's performance
-5. Choose between a traditional ping log feed or a ping graph
+5. Choose between a traditional ping log feed or a graph
+6. Perform periodic download speed tests
 
 ### Media
 <table class="tg">
@@ -121,16 +122,37 @@ These are the options you can find in `config.js`:
   <tr>
     <td class="tg-0lax">graphMode</td>
     <td class="tg-0lax">boolean</td>
-    <td class="tg-0lax">If set to true, program will run in graph mode where ping data is shown as a graph instead of constant ping logs. Note that window sizing is not dynamic in graph mode and you'll have to adjust your terminal's window size before you begin the program</td>
+    <td class="tg-0lax">If set to true, program will run in graph mode where ping data is shown as a graph instead of constant ping logs. Note that window sizing is not dynamic in graph mode and you'll have to adjust your terminal's window size before you begin the program.</td>
     <td class="tg-0lax">true</td>
     <td>--graphmode, -g</td>
   </tr>
   <tr>
     <td class="tg-0lax">graphModeMaxPings</td>
     <td class="tg-0lax">integer</td>
-    <td class="tg-0lax">If program is in graph mode, this is the maximum amount of pings shown and thus the max width of the X axis. If greater than window width, it will be resized down to the window width</td>
+    <td class="tg-0lax">If program is in graph mode, this is the maximum amount of pings shown and thus the max width of the X axis. If greater than window width, it will be resized down to the window width.</td>
     <td class="tg-0lax">125</td>
     <td>--graphmaxpings, -p</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">speedTestSize</td>
+    <td class="tg-0lax">integer</td>
+    <td class="tg-0lax">The size, in bytes, that the downloaded sample will be every speed test. Higher size means more accurate tests, but also more bandwidth consumption. Change to 0 to disable download speed tests</td>
+    <td class="tg-0lax">50000</td>
+    <td>--speedtestsize, -s</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">speedTestFrequency</td>
+    <td class="tg-0lax">integer</td>
+    <td class="tg-0lax">How many ping batches must be ran before another download speed test will be ran.</td>
+    <td class="tg-0lax">10</td>
+    <td>--speedtestfreq, -f</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">speedTestUnit</td>
+    <td class="tg-0lax">string</td>
+    <td class="tg-0lax">The unit you want the download speed test result to be represented as. Options are: "GBps", "gbps", "MBps", "mbps", "KBps", "kbps"</td>
+    <td class="tg-0lax">mbps</td>
+    <td>--speedtestunit, -u</td>
   </tr>
 </tbody>
 </table>

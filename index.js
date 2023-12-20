@@ -5,6 +5,9 @@ const chalk = require('chalk');
 const achart = require("asciichart");
 const windowsize = require("window-size");
 const fs = require('fs');
+const nspeedClass = require("network-speed");
+const nspeed = new nspeedClass();
+const speedTestUrl = "https://eu.httpbin.org/stream-bytes/"
 const cla = require('command-line-args');
 const options = cla([
     {
@@ -63,6 +66,21 @@ const options = cla([
         name: 'graphmaxpings',
         alias: 'p',
         type: Number
+    },
+    {
+        name: 'speedtestsize',
+        alias: 's',
+        type: Number
+    },
+    {
+        name: 'speedtestfreq',
+        alias: 'f',
+        type: Number
+    },
+    {
+        name: 'speedtestunit',
+        alias: 'u',
+        type: String
     }
 ]);
 
@@ -76,7 +94,10 @@ let optionConfigCoor = {
     maxhistory: 'maxPingChunkSize',
     align: 'alignLogs',
     graphmode: 'graphMode',
-    graphmaxpings: 'graphModeMaxPings'
+    graphmaxpings: 'graphModeMaxPings',
+    speedtestsize: 'speedTestSize',
+    speedtestfreq: 'speedTestFrequency',
+    speedtestunit: 'speedTestUnit',
 }
 
 for(let [key, value] of Object.entries(options)){
@@ -139,6 +160,17 @@ function recordPing(ip, delay){
         pingChunk[ip] = [];
     } 
 }
+
+let speedTestUnitMult = {
+    "GBps": 0.000125,
+    "gbps": 0.001,
+    "MBps": 0.125,
+    "mbps": 1,
+    "KBps": 125,
+    "kbps": 1000
+}
+
+if(!speedTestUnitMult[config.speedTestUnit])throw Error("Configuration error: Invalid speed test unit. Options are GBps, gbps, MBps, mbps, KBps, kbps. Got " + config.speedTestUnit)
 
 if(!config.ips){
     config.ips = prompt("Please enter the IP addresses you wish to ping, separated by spaces: ");
@@ -216,17 +248,49 @@ function graphRender(){
             statusBarString = statusBarString + (i != attach.length - 1 ? statusColor(' ') : ' ');
         }
     }
-    if(currentOutageBegan != 0) statusBarString = statusBarString + chalk.bgRed(` OUTAGE | Duration: ${Math.floor((Date.now() - currentOutageBegan) / 1000)}s `)
+    if(currentOutageBegan != 0){
+        statusBarString = statusBarString + chalk.bgRed(` OUTAGE | Duration: ${Math.floor((Date.now() - currentOutageBegan) / 1000)}s `)
+    } else {
+        if(config.speedTestSize != 0)statusBarString = statusBarString + ` Down: ${speedTestLast != null ? speedTestLast : 'Waiting'} ${speedTestInProgress ? '...' : ''}`
+    }
     console.log(infoBarString)
     console.log(statusBarString)
     pingArrsTimedOut = [];
 }
+
+let speedTestCount = 0;
+let speedTestBatch = null;
+let speedTestLast = null;
+let speedTestInProgress = false;
+let speedTestFirst = false;
+
+function speed(){
+    let batch;
+    speedTestFirst = true;
+    speedTestInProgress = true;
+    nspeed.checkDownloadSpeed(`${speedTestUrl}${config.speedTestSize}`, config.speedTestSize)
+    .then(speed =>{
+        batch = `${speedTestUnitMult[config.speedTestUnit] * speed.mbps}${config.speedTestUnit}`;
+    })
+    .catch(()=>{
+        batch = `0${config.speedTestUnit}`
+    })
+    .finally(()=>{
+        speedTestBatch = batch;
+        speedTestLast = batch;
+        speedTestCount = 0;
+        speedTestInProgress = false;
+    })
+}
+
 
 function check(){
     setTimeout(async ()=>{
         let pings = {};
         let timeoutCount = 0;
         let pingString = "";
+        speedTestCount = speedTestCount + 1;
+        if(config.speedTestSize != 0 && (speedTestCount == config.speedTestFrequency || !speedTestFirst) && currentOutageBegan == 0)speed();
         for(ip of config.ips){
             let pingResult = await ping.promise.probe(ip, { 'timeout': Math.floor(config.pingTimeout / 1000) });
             if(config.graphMode) pingArrAdd(ip, pingResult.time);
@@ -284,7 +348,11 @@ function check(){
         }
 
         if(timeoutConsecutive < config.timeoutCountForOutage && !config.graphMode) console.log(pingString);
-    
+        if(speedTestBatch != null && !config.graphMode){
+            console.log(`Download Speed: ${speedTestBatch}`);
+            speedTestBatch = null;
+        };
+
         if(config.graphMode)graphRender()
 
         check()
