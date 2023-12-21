@@ -4,3 +4,4 @@ outages/*
 !outages/README.txt
 pingHistory/*
 !pingHistory/README.txt
+config2.js

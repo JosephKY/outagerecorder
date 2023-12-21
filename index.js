@@ -1,5 +1,7 @@
 const ping = require('ping');
-const config = require("./config");
+let config = require("./config");
+const config2 = require("./config2");
+if(config2)config = config2;
 const prompt = require("prompt-sync")();
 const chalk = require('chalk');
 const achart = require("asciichart");
@@ -250,7 +252,7 @@ function graphRender(){
     if(currentOutageBegan != 0){
         statusBarString = statusBarString + chalk.bgRed(` OUTAGE | Duration: ${Math.floor((Date.now() - currentOutageBegan) / 1000)}s `)
     } else {
-        if(config.speedTestSize != 0)statusBarString = statusBarString + ` Down: ${speedTestLast != null ? speedTestLast : 'Waiting'} ${speedTestInProgress ? '...' : ''}`
+        if(config.speedTestSize != 0)statusBarString = statusBarString + ` ${speedTestLast != null ? speedTestLast : 'Waiting'} ${speedTestInProgress ? '...' : ''}`
     }
     console.log(infoBarString)
     console.log(statusBarString)
