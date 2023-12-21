@@ -4,9 +4,8 @@ const prompt = require("prompt-sync")();
 const chalk = require('chalk');
 const achart = require("asciichart");
 const windowsize = require("window-size");
+const https = require("https")
 const fs = require('fs');
-const nspeedClass = require("network-speed");
-const nspeed = new nspeedClass();
 const speedTestUrl = "https://eu.httpbin.org/stream-bytes/"
 const cla = require('command-line-args');
 const options = cla([
@@ -268,14 +267,24 @@ function speed(){
     let batch;
     speedTestFirst = true;
     speedTestInProgress = true;
-    nspeed.checkDownloadSpeed(`${speedTestUrl}${config.speedTestSize}`, config.speedTestSize)
-    .then(speed =>{
-        batch = `${speedTestUnitMult[config.speedTestUnit] * speed.mbps}${config.speedTestUnit}`;
-    })
-    .catch(()=>{
+    let startTime;
+    https.get(`${speedTestUrl}${config.speedTestSize}`, response => {
+        response.once('data', () => {
+            startTime = new Date().getTime();
+        });
+
+        response.once('end', () => {
+            let endTime = new Date().getTime();
+            let duration = (endTime - startTime) / 1000;
+            let bitsLoaded = config.speedTestSize * 8;
+            batch = `${speedTestUnitMult[config.speedTestUnit] * (((bitsLoaded / duration) / 1000000)).toFixed(3)}${config.speedTestUnit}`;
+            speedTestBatch = batch;
+            speedTestLast = batch;
+            speedTestCount = 0;
+            speedTestInProgress = false;
+        });
+    }).on('error', ()=>{
         batch = `0${config.speedTestUnit}`
-    })
-    .finally(()=>{
         speedTestBatch = batch;
         speedTestLast = batch;
         speedTestCount = 0;
