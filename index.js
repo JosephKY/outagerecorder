@@ -1,7 +1,9 @@
 const ping = require('ping');
 let config = require("./config");
+try{
 const config2 = require("./config2");
 if(config2)config = config2;
+}catch(e){}
 const prompt = require("prompt-sync")();
 const chalk = require('chalk');
 const achart = require("asciichart");
